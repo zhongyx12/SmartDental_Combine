@@ -214,6 +214,19 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 					if (accounts.length == accounts2.length) {
 						continue;
 					}
+					Date now = new Date();
+					int nowYear = now.getYear();
+					int nowMonth = now.getMonth();
+					String startTime = Integer.toString(nowYear)+"-"+Integer.toString(nowMonth)+"-1";
+					String endTime = Tools.getStringFormDate(now);
+				    SDAccount [] monthAccounts = Tools.filterAccounts(accounts, startTime, endTime);
+				    SDAccount [] monthAccounts2 = Tools.filterAccounts(accounts, startTime, endTime);
+				    for(double i = 1; i > 0; i-=0.1)
+				    	if(Tools.getTotalCost(monthAccounts) < threshold*i && Tools.getTotalCost(monthAccounts2) >= threshold*i){
+				    		;
+				    		break;
+				    	}
+				    		
 					
 					NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
                     //构建一个通知对象(需要传递的参数有三个,分别是图标,标题和 时间)

@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
 import android.R.string;
 import android.content.Context;
 import android.os.Environment;
@@ -215,7 +216,7 @@ public class Tools {
 		for (int i = 0; i < accounts.length; i ++) {
 			SDAccount account = accounts[i];
 			String time = account.time.split(" ", 2)[0];
-			if (time.compareTo(startTime) != -1 && time.compareTo(endTime) != 1) {
+			if (time.compareTo(startTime) > -1 && time.compareTo(endTime) < 1) {
 				res.add(account);
 			}
 		}
