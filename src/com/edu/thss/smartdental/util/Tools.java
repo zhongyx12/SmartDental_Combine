@@ -259,4 +259,11 @@ public class Tools {
 		}
 		return list;
 	}
+	
+	public static double getTotalCost(SDAccount [] accounts){
+		double sum = 0;
+		for(int i = 0; i < accounts.length; i++)
+			sum += accounts[i].finalTotal;
+		return sum;
+	}
 }
