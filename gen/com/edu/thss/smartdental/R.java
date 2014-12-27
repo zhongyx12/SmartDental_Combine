@@ -485,6 +485,7 @@ containing a value of this type.
         public static final int drawer_close=0x7f080005;
         public static final int drawer_open=0x7f080004;
         public static final int hello_world=0x7f080003;
+        public static final int title_activity_alarm_bill=0x7f080017;
         public static final int title_activity_alarm_dialogue=0x7f080010;
         public static final int title_activity_bill_detail=0x7f080015;
         public static final int title_activity_bill_fragment=0x7f080014;
