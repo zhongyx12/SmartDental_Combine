@@ -93,10 +93,6 @@
             android:name=".LineChartActivity"
             android:label="@string/title_activity_line_chart" >
         </activity>
-        <activity
-            android:name=".AlarmBill"
-            android:label="@string/title_activity_alarm_bill" >
-        </activity>
     </application>
 
 </manifest>

@@ -127,7 +127,7 @@ public class BillListFragment extends Fragment implements SwipeRefreshLayout.OnR
 		adapter = new BillListAdapter();
         mListView.setAdapter(adapter); 
 		
-        //¶ÔlistÌí¼Óµã»÷ÊÂ¼ş
+
         mListView.setOnItemClickListener(new OnItemClickListener() {
         	@Override
         	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -147,10 +147,7 @@ public class BillListFragment extends Fragment implements SwipeRefreshLayout.OnR
 	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        // ÉèÖÃÉÏÏÂÎÄ²Ëµ¥µÄÑ¡Ïî"²é¿´ÏêÇé"  
-        menu.add(Menu.NONE, 0, 0, "±ê¼ÇÒÑ¶Á");  
-        // ÉèÖÃÉÏÏÂÎÄ²Ëµ¥µÄÑ¡Ïî"É¾³ıĞÅÏ¢"  
-//        menu.add(Menu.NONE, 1, 0, "É¾³ıÕËµ¥");
+        menu.add(Menu.NONE, 0, 0, "è®¾ä¸ºæ ‡è®°");  
 	}
 	
 	@Override 
@@ -263,7 +260,7 @@ public class BillListFragment extends Fragment implements SwipeRefreshLayout.OnR
 			accounts = Tools.filterFlagAccounts(accounts);
 		for(int i = 0; i < accounts.length; i++){
 			item = new BillListItem();
-			BillListElement billList = new BillListElement(accounts[i].hospital, accounts[i].time, Integer.toString(((int) accounts[i].finalTotal)));
+			BillListElement billList = new BillListElement(accounts[i].hospital, accounts[i].time, Integer.toString(((int) accounts[i].finalTotal))+"å…ƒ");
 			item.billList = billList;
 			mDatas.add(item);
 		}
