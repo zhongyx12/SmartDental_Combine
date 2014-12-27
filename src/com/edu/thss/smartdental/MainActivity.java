@@ -40,19 +40,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-
-import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-
 public class MainActivity extends FragmentActivity implements OnItemClickListener {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -99,6 +86,7 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[6],mNavMenuIconsTypeArray.getResourceId(6, -1)));
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[7],mNavMenuIconsTypeArray.getResourceId(7, -1)));
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[8],mNavMenuIconsTypeArray.getResourceId(8, -1)));
+		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[9],mNavMenuIconsTypeArray.getResourceId(9, -1)));
 		
 		mNavMenuIconsTypeArray.recycle();
 		
@@ -174,6 +162,9 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 			fragment = new BillFragment();
 			break;
 		case 8: 
+			fragment = new ClockFragment();
+			break;
+		case 9:
 			fragment = new SettingFragment();
 			break;
 		default: break;
@@ -202,7 +193,6 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 
 		@Override
 		protected Object doInBackground(Object... arg0) {
-			
 			while (true) {
 				try {
 					// Log.i("travis", "Sleep");
@@ -225,18 +215,16 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 						continue;
 					}
 					
-					
-				    
 					NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-                    //æ„å»ºä¸€ä¸ªé€šçŸ¥å¯¹è±¡(éœ€è¦ä¼ é€’çš„å‚æ•°æœ‰ä¸‰ä¸ª,åˆ†åˆ«æ˜¯å›¾æ ‡,æ ‡é¢˜å’Œ æ—¶é—´)
-                    Notification notification = new Notification(R.drawable.ic_launcher,"æ‚¨æœ‰"+(accounts.length-accounts2.length)+"æ¡æ–°çš„è´¦å•",System.currentTimeMillis());
+                    //¹¹½¨Ò»¸öÍ¨Öª¶ÔÏó(ĞèÒª´«µİµÄ²ÎÊıÓĞÈı¸ö,·Ö±ğÊÇÍ¼±ê,±êÌâºÍ Ê±¼ä)
+                    Notification notification = new Notification(R.drawable.ic_launcher,"ÄúÓĞ"+(accounts.length-accounts2.length)+"ÌõĞÂµÄÕËµ¥",System.currentTimeMillis());
                     Intent intent = new Intent(MainActivity.this,MainActivity.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,intent,0); 
-                    notification.setLatestEventInfo(getApplicationContext(), "è´¦å•æé†’", "æ‚¨æœ‰"+(accounts.length-accounts2.length)+"æ¡æ–°çš„è´¦å•", pendingIntent);
-                    notification.flags = Notification.FLAG_AUTO_CANCEL;//ç‚¹å‡»åè‡ªåŠ¨æ¶ˆå¤±
-                    notification.defaults = Notification.DEFAULT_SOUND;//å£°éŸ³é»˜è®¤
-                    manager.notify(0, notification);//å‘åŠ¨é€šçŸ¥,idç”±è‡ªå·±æŒ‡å®šï¼Œæ¯ä¸€ä¸ªNotificationå¯¹åº”çš„å”¯ä¸€æ ‡å¿—
-                     
+                    notification.setLatestEventInfo(getApplicationContext(), "ÕËµ¥ÌáĞÑ", "ÄúÓĞ"+(accounts.length-accounts2.length)+"ÌõĞÂµÄÕËµ¥", pendingIntent);
+                    notification.flags = Notification.FLAG_AUTO_CANCEL;//µã»÷ºó×Ô¶¯ÏûÊ§
+                    notification.defaults = Notification.DEFAULT_SOUND;//ÉùÒôÄ¬ÈÏ
+                    manager.notify(0, notification);//·¢¶¯Í¨Öª,idÓÉ×Ô¼ºÖ¸¶¨£¬Ã¿Ò»¸öNotification¶ÔÓ¦µÄÎ¨Ò»±êÖ¾
+					
 					// Log.i("travis", "count: " + accounts[0].hospital);
 					
 					FileOutputStream fout = openFileOutput("accounts.tmp", Context.MODE_PRIVATE);;
