@@ -3,6 +3,8 @@ package com.edu.thss.smartdental.ui.calendar;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.edu.thss.smartdental.model.LocalDB;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -26,16 +28,21 @@ public class CalendarView extends View implements View.OnTouchListener{
 	private int[] date = new int[42]; //日历上显示的数字
 	private int curStartIndex,curEndIndex; //当前显示的日历起始的索引
 	private OnItemClickListener dayClickListener ;
- 
+	private String [] timeOfQuery = new String[42];//用于向数据库查询的日期数组
+	private boolean [] tipFlag = new boolean[42];//储存日历一个页面上42天是否有事件的bool值
+	private Context AppContext;
+   
 		//日期选择监听事件
 
 
 	public CalendarView(Context context) {
 		super(context);
+		AppContext = context.getApplicationContext();
 		init();
 	}
 	public CalendarView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		AppContext = context.getApplicationContext();
 		init();
 	}
 	private void init(){
@@ -67,8 +74,11 @@ public class CalendarView extends View implements View.OnTouchListener{
           
         // 计算日期  
         calculateDate();  
+        LocalDB ldb = new LocalDB(AppContext);
+        tipFlag = ldb.checkDateList(timeOfQuery);
+        ldb.close();
         // 按下状态，选择状态背景色  
-        drawDownOrSelectedBg(canvas);   
+        // drawDownOrSelectedBg(canvas);   
         int todayIndex = -1;  
         calendar.setTime(curDate);  
         String curYearAndMonth = calendar.get(Calendar.YEAR) + ""  
@@ -80,6 +90,8 @@ public class CalendarView extends View implements View.OnTouchListener{
             int todayNumber = calendar.get(Calendar.DAY_OF_MONTH);  
             todayIndex = curStartIndex + todayNumber - 1;  
         }  
+        //modified by YY
+        drawCellBg(canvas, todayIndex, surface.cellDownColor);
         for (int i = 0; i < 42; i++) {  
             int color = surface.textColor;  
             if (isLastMonth(i)) {  
@@ -90,7 +102,7 @@ public class CalendarView extends View implements View.OnTouchListener{
             if (todayIndex != -1 && i == todayIndex) {  
                 color = surface.todayNumberColor;  
             }  
-            if(i == 26 || i== 13 || i==17||i==20||i==21) {
+            if(tipFlag[i]) {
             	drawCellTip(canvas,i,surface.tipColor);
             }
             drawCellText(canvas, i, date[i] + "", color);  
@@ -108,7 +120,8 @@ public class CalendarView extends View implements View.OnTouchListener{
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		surface.width = getResources().getDisplayMetrics().widthPixels;  
-        surface.height = (int) (getResources().getDisplayMetrics().heightPixels*2/5); 
+		//modified by YY
+        surface.height = (int) (getResources().getDisplayMetrics().heightPixels*2/3); 
        // surface.height = (int)getHeight();
         widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(surface.width,  
                 View.MeasureSpec.EXACTLY);  
@@ -122,7 +135,7 @@ public class CalendarView extends View implements View.OnTouchListener{
 	public boolean onTouch(View v, MotionEvent event) {
 		switch (event.getAction()) {  
         case MotionEvent.ACTION_DOWN:  
-            setSelectedDateByCoor(event.getX(), event.getY());  
+        	setSelectedDateByCoor(event.getX(), event.getY());
             break;  
         case MotionEvent.ACTION_UP:  
             if (downDate != null) {  
@@ -151,7 +164,13 @@ public class CalendarView extends View implements View.OnTouchListener{
 	}
 	
 	private void calculateDate() {  
-        calendar.setTime(curDate);  
+	//add by Lin Yangmei
+		int t_year;//用于构成查询时间的临时变量
+		 int t_month;
+		 int t_date;
+	//end
+		
+		calendar.setTime(curDate);  
         calendar.set(Calendar.DAY_OF_MONTH, 1);  
         int dayInWeek = calendar.get(Calendar.DAY_OF_WEEK);    
         int monthStart = dayInWeek;  
@@ -161,43 +180,91 @@ public class CalendarView extends View implements View.OnTouchListener{
         monthStart -= 1;  //以日为开头-1，以星期一为开头-2  
         curStartIndex = monthStart;  
         date[monthStart] = 1;  
+        
+        //add by Lin Yangmei		
+        //构造本月1日的查询条目
+        t_year = calendar.get(Calendar.YEAR);
+        t_month = calendar.get(Calendar.MONTH);
+        t_date = 1;
+        addQueryTime(t_year,t_month,t_date,monthStart);
+        //end
+     
         // last month  
         if (monthStart > 0) {  
             calendar.set(Calendar.DAY_OF_MONTH, 0);  
-            int dayInmonth = calendar.get(Calendar.DAY_OF_MONTH);  
+            int dayInmonth = calendar.get(Calendar.DAY_OF_MONTH); 
+            
+            //add by Lin Yangmei
+            //获取上个月的年月数据
+            t_year = calendar.get(Calendar.YEAR);
+            t_month = calendar.get(Calendar.MONTH);
+            //end
+            
             for (int i = monthStart - 1; i >= 0; i--) {  
-                date[i] = dayInmonth;  
+                date[i] = dayInmonth; 
+                //add by Lin Yangmei
+                addQueryTime(t_year,t_month,dayInmonth,i);   
+                //end
                 dayInmonth--;  
+                
+                
             }  
             calendar.set(Calendar.DAY_OF_MONTH, date[0]);  
         }  
-        showFirstDate = calendar.getTime();  
+        showFirstDate = calendar.getTime();      
+        
         // this month  
         calendar.setTime(curDate);  
         calendar.add(Calendar.MONTH, 1);  
         calendar.set(Calendar.DAY_OF_MONTH, 0);   
-        int monthDay = calendar.get(Calendar.DAY_OF_MONTH);  
+        int monthDay = calendar.get(Calendar.DAY_OF_MONTH); 
+        
+        //add by Lin Yangmei
+        //获取当前月的年月数据
+        t_year = calendar.get(Calendar.YEAR);
+        t_month = calendar.get(Calendar.MONTH);
+        //end
+        
         for (int i = 1; i < monthDay; i++) {  
             date[monthStart + i] = i + 1;  
+            //add by Lin Yangmei
+            addQueryTime(t_year,t_month,i+1,monthStart+i);
+            //end
         }  
         curEndIndex = monthStart + monthDay;  
         // next month  
-        for (int i = monthStart + monthDay; i < 42; i++) {  
-            date[i] = i - (monthStart + monthDay) + 1;  
-        }  
-        if (curEndIndex < 42) {  
+        //获取下一个月的年月信息
+        
+        if (curEndIndex < 42) {  //移动了位置
             // 显示了下一月的  
             calendar.add(Calendar.DAY_OF_MONTH, 1);  
         }  
+        //add by Lin Yangmei
+        t_year = calendar.get(Calendar.YEAR);
+        t_month = calendar.get(Calendar.MONTH);
+        //end
+        
+        for (int i = monthStart + monthDay; i < 42; i++) {  
+            date[i] = i - (monthStart + monthDay) + 1;  
+          //add by Lin Yangmei
+            t_date = i - (monthStart + monthDay) + 1;
+            addQueryTime(t_year,t_month,t_date,i);
+          //end
+        }  
+       
         calendar.set(Calendar.DAY_OF_MONTH, date[41]);  
         showLastDate = calendar.getTime();  
+        //add by Lin Yangmei
+       // showTimeOfQuery();
+        //end
+     
     } 
 	private void drawCellText(Canvas canvas, int index, String text, int color) {  
         int x = getXByIndex(index);  
         int y = getYByIndex(index);  
         surface.datePaint.setColor(color);  
         float cellY = surface.monthHeight + surface.weekHeight + (y - 1)  
-                * surface.cellHeight + surface.cellHeight * 3 / 4f;  
+                * surface.cellHeight + surface.cellHeight * 0.6f;  //modified by YY
         float cellX = (surface.cellWidth * (x - 1))  
                 + (surface.cellWidth - surface.datePaint.measureText(text))  
                 / 2f;  
@@ -207,18 +274,36 @@ public class CalendarView extends View implements View.OnTouchListener{
         int x = getXByIndex(index);  
         int y = getYByIndex(index);  
         surface.cellBgPaint.setColor(color);  
-        float left = surface.cellWidth * (x - 1) + surface.borderWidth;  
+        //modified by YY
+        float left = surface.cellWidth * (x - 0.5f) + surface.borderWidth;
+        //modified by LinYangmei
+        float top = surface.monthHeight + surface.weekHeight + (y - 1)  
+                * surface.cellHeight + surface.cellHeight * 0.47f;
+        //end
+        float r = (float) 0.9*surface.cellHeight/3f;
+        canvas.drawCircle(left, top , r, surface.cellBgPaint);
+        /*float left = surface.cellWidth * (x - 1) + surface.borderWidth;  
         float top = surface.monthHeight + surface.weekHeight + (y - 1)  
                 * surface.cellHeight + surface.borderWidth;  
+        
         canvas.drawRect(left, top, left + surface.cellWidth  
                 - surface.borderWidth, top + surface.cellHeight  
-                - surface.borderWidth, surface.cellBgPaint);  
+                - surface.borderWidth, surface.cellBgPaint);  */
     }
 	private void drawCellTip(Canvas canvas, int index,int color){
-		Path path = new Path();
+		// modified by YY
+		//Path path = new Path();
+		float radius = 5;//modified by LinYangmei
 		int x = getXByIndex(index);  
-        int y = getYByIndex(index);  
-		float left = surface.cellWidth*(x-1)+surface.borderWidth;
+        int y = getYByIndex(index);        
+        float left = surface.cellWidth*(x-0.5f)+surface.borderWidth;
+		float top = surface.monthHeight + surface.weekHeight + y  
+                * surface.cellHeight - radius*2.7f; //modified by LinYangmei
+		
+		surface.cellBgPaint.setColor(color);
+		canvas.drawCircle(left, top , radius , surface.cellBgPaint);
+		
+		/*float left = surface.cellWidth*(x-1)+surface.borderWidth;
 		float top = surface.monthHeight + surface.weekHeight + (y - 1)  
                 * surface.cellHeight + surface.borderWidth; 
 		path.moveTo(left, top);
@@ -227,7 +312,7 @@ public class CalendarView extends View implements View.OnTouchListener{
 		path.close();
 		surface.weekBgPaint.setColor(color);
 		canvas.drawPath(path, surface.weekBgPaint);
-		 //绘制三角形
+		 //绘制三角形*/
 	}
 	private void drawWeekBg(Canvas canvas,int index){
 		int x = getXByIndex(index);
@@ -235,9 +320,11 @@ public class CalendarView extends View implements View.OnTouchListener{
 		surface.weekBgPaint.setColor(Color.parseColor("#00bfff"));
 		float left = surface.cellWidth*(x-1)+surface.borderWidth;
 		float top = surface.monthHeight + surface.borderWidth;
-		canvas.drawRect(left, top,left+surface.cellWidth-surface.borderWidth,
-				top+surface.weekHeight-surface.borderWidth, surface.weekBgPaint);
-		
+		// modified by YY
+		//canvas.drawRect(left, top,left+surface.cellWidth-surface.borderWidth,
+		//		top+surface.weekHeight-surface.borderWidth, surface.weekBgPaint);
+		canvas.drawRect(left, top, left+surface.cellWidth+1,
+				top+surface.weekHeight, surface.weekBgPaint);
 		/*Path path = new Path();
 		path.moveTo(left, top);
 		path.lineTo(left, top+surface.weekHeight/4);
@@ -379,6 +466,32 @@ public class CalendarView extends View implements View.OnTouchListener{
 	    public interface OnItemClickListener {  
 	        void OnItemClick(Date date);  
 	    }  
+	    //add by LinYangmei
+	    private void addQueryTime(int year, int month, int date, int i)
+	    {
+	    	String time;
+	    	int t_month = month+1;//对month进行修正
+	    	String s_month;
+	    	String s_date;
+	    	//把月和日的信息转换成符合查询要求的格式
+	    	if(t_month<10)
+	    		s_month = "0"+t_month;	    
+	    	else
+	    		s_month = t_month+"";
+	    	if(date<10)	    	
+	    		s_date = "0"+date;	    
+	    	else
+	    		s_date = date+"";
+	    	time = year+"-"+s_month+"-"+s_date;
+	        timeOfQuery[i] = time;
+	    }
+	    //add by Lin Yangmei
+	    private void showTimeOfQuery()
+	    {
+	    	int i = 0;
+	        for(i = 0; i<42; i++)
+	        	System.out.println("第"+i+"天是"+timeOfQuery[i]);
+	    }
 	
 
 }

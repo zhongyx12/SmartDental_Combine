@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:id="@+id/alarmclock_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+    />
+    
+    <RelativeLayout
+        android:id="@+id/alarmclock_item_holder"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="#d00000">
+        <TextView
+            android:id="@+id/alarmclock_item_holder_del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_appoint_del"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textColor="@color/floralwhite"
+            android:text="删除" 
+            android:textSize="16sp"
+            />
+    </RelativeLayout>
+</merge>

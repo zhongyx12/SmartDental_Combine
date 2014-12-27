@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OnedayAlarmClockActivity" >
+	
+        <RelativeLayout 
+            android:id="@+id/alarmclock_oneday_titlebar"
+            android:layout_width="match_parent"
+	        android:layout_height="60dp"
+	        android:background="@drawable/bg_list_titlebar">
+
+	        <TextView
+	            android:id="@+id/alarmclock_oneday_date"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerInParent="true"
+	            android:text="11月11日"
+	            android:textColor="#eeeeee"
+	            android:textSize="20sp"
+	            android:textStyle="bold" />
+		
+		    <TextView
+		        android:id="@+id/alarmclock_add"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentRight="true"
+		        android:paddingRight="10dp"
+		        android:text="+"
+		        android:textColor="@color/app_white"
+		        android:textSize="45sp" />
+        </RelativeLayout>
+
+	    <com.edu.thss.smartdental.ui.alarmclock.ListViewCompat
+	        android:id="@+id/alarmclock_oneday_listcompat"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/alarmclock_oneday_titlebar"
+	        android:background="@color/fragment_background"
+	        android:cacheColorHint="#00000000"
+	        android:divider="#dddbdb"
+	        android:dividerHeight="1dp"
+	        android:drawSelectorOnTop="false"
+	        android:listSelector="@android:color/transparent" >
+	    </com.edu.thss.smartdental.ui.alarmclock.ListViewCompat>
+	  
+
+</RelativeLayout>
+
+

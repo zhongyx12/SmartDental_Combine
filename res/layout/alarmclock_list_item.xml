@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="40dp"
+     android:background="#ffffff"
+     android:descendantFocusability="blocksDescendants"
+     android:gravity="center_vertical"
+     
+     >
+     <TextView
+         android:id="@+id/alarmclock_item_title" 
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:textSize="18sp"
+         android:textColor="#000000"
+         android:text="name"
+         android:layout_toRightOf="@+id/alarmclock_item_time"
+         android:layout_alignParentRight="true"
+         android:paddingTop="16dp"
+         android:layout_marginLeft="30dp"
+         />
+
+     <ImageView
+         android:layout_width="3dp"
+         android:layout_height="match_parent"
+         android:layout_toRightOf="@+id/alarmclock_item_time"
+         android:layout_marginLeft="14dp"
+         android:layout_marginTop="6dp"
+         android:layout_marginBottom="2dp"
+         android:background="#00adff" />
+
+     <TextView
+         android:id="@+id/alarmclock_item_time"
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:layout_alignBottom="@+id/alarmclock_item_title"
+         android:layout_alignParentLeft="true"
+         android:layout_marginLeft="10dp"
+         android:paddingTop="20dp"
+         android:text="9:00"
+         android:textColor="#666666"
+         android:textSize="14sp" />
+
+ </RelativeLayout>

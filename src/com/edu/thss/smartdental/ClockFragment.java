@@ -1,24 +1,23 @@
 package com.edu.thss.smartdental;
 
 import java.util.Date;
-
-
-import com.edu.thss.smartdental.ui.calendar.CalendarView;
-import com.edu.thss.smartdental.ui.calendar.CalendarView.OnItemClickListener;
+import java.util.Calendar;//add by Lin Yangmei
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class AppointmentFragment extends Fragment{
+import com.edu.thss.smartdental.AppointmentFragment.calendarItemClickListener;
+import com.edu.thss.smartdental.ui.calendar.CalendarView;
+import com.edu.thss.smartdental.ui.calendar.CalendarView.OnItemClickListener;
+
+public class ClockFragment extends Fragment{
 	CalendarView calendar;
 	Button left;
 	Button right;
@@ -36,7 +35,7 @@ public class AppointmentFragment extends Fragment{
 		}};
 	
 	
-	public AppointmentFragment(){
+	public ClockFragment(){
 		
 	}
 
@@ -62,14 +61,39 @@ public class AppointmentFragment extends Fragment{
 
 		@Override
 		public void OnItemClick(Date date) {
-			Intent intent = new Intent(getActivity(),OnedayAppointActivity.class);
+			//add by Lin Yangmei
+			Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+			int year = cal.get(Calendar.YEAR);
+			int month = cal.get(Calendar.MONTH);
+			int t_date = cal.get(Calendar.DATE);
+			String time = buildTime(year,month,t_date);
 			
-			//System.out.println("被点击的日期是："+date);
+			//System.out.println("被点击的日期是："+time);
+			//end
+			 
+			Intent intent = new Intent(getActivity(),OnedayAlarmClockActivity.class);
+			intent.putExtra("date",time);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 		}  
-		
 	 }
-	
-	 
+	private String buildTime(int year, int month, int date)
+    {
+    	String time;
+    	int t_month = month+1;//对month进行修正
+    	String s_month;
+    	String s_date;
+    	//把月和日的信息转换成符合查询要求的格式
+    	if(t_month<10)
+    		s_month = "0"+t_month;	    
+    	else
+    		s_month = t_month+"";
+    	if(date<10)	    	
+    		s_date = "0"+date;	    
+    	else
+    		s_date = date+"";
+    	time = year+"-"+s_month+"-"+s_date;
+        return time;
+    }
 }

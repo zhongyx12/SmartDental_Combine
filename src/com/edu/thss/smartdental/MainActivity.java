@@ -67,7 +67,8 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[5],mNavMenuIconsTypeArray.getResourceId(5, -1)));
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[6],mNavMenuIconsTypeArray.getResourceId(6, -1)));
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[7],mNavMenuIconsTypeArray.getResourceId(7, -1)));
-	
+		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[8],mNavMenuIconsTypeArray.getResourceId(8, -1)));
+		
 		mNavMenuIconsTypeArray.recycle();
 		
 		mAdapter = new NavDrawerListAdapter(getApplicationContext(),mNavDrawerItems);
@@ -140,6 +141,9 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 			break;
 		case 7: 
 			fragment = new SettingFragment();
+			break;
+		case 8:
+			fragment = new ClockFragment();
 			break;
 		default: break;
 		}

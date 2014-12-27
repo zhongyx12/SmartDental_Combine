@@ -4,6 +4,8 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
@@ -15,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.edu.thss.smartdental.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_home"
             android:launchMode="standard" >
             <intent-filter>
@@ -25,44 +27,61 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.OneEMRActivity"
+            android:name=".OneEMRActivity"
             android:label="@string/title_activity_one_emr" >
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.OneImageActivity"
+            android:name=".OneImageActivity"
             android:label="@string/title_activity_one_image" >
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.EditBasicInfoActivity"
+            android:name=".EditBasicInfoActivity"
             android:label="@string/title_activity_edit_basic_info" >
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.EditExtendsInfoActivity"
+            android:name=".EditExtendsInfoActivity"
             android:label="@string/title_activity_edit_extends_info" >
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.EditContactActivity"
+            android:name=".EditContactActivity"
             android:label="@string/title_activity_edit_contact" >
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.EditPassActivity"
+            android:name=".EditPassActivity"
             android:label="@string/title_activity_edit_pass" >
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.EditAllergyActivity"
+            android:name=".EditAllergyActivity"
             android:label="@string/title_activity_edit_allergy" >
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.EditFamilyActivity"
+            android:name=".EditFamilyActivity"
             android:label="@string/title_activity_edit_family" >
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.OnedayAppointActivity"
+            android:name=".OnedayAppointActivity"
             android:label="@string/title_activity_oneday_appoint" >
         </activity>
         <activity
-            android:name="com.edu.thss.smartdental.MyTestActivity"
+            android:name=".MyTestActivity"
             android:label="@string/title_activity_my_test" >
+        </activity>
+        <activity
+            android:name=".AlarmDialogue"
+            android:label="@string/title_activity_alarm_dialogue" >
+        </activity>
+        <activity
+            android:name=".OnedayAlarmClockActivity"
+            android:label="@string/title_activity_oneday_alarm_clock" >
+        </activity>
+        <activity
+            android:name=".SetClockActivity"
+            android:label="@string/title_activity_set_clock" >
+        </activity>
+        <activity
+            android:name=".DailyRemind"
+            android:label="@string/title_activity_daily_remind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
     </application>
 
