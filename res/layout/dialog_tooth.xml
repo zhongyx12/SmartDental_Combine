@@ -151,7 +151,7 @@
     	        android:textColor="#cccccc"
      	        android:gravity="center_vertical"/>
             <TextView
-                android:id="@+id/dialog_tooth_permanent"
+                android:id="@+id/dialog_tooth_permanent_hello"
                 android:layout_width="wrap_content"
     	        android:layout_height="fill_parent"
     	        android:layout_marginLeft="10dp"
@@ -161,7 +161,7 @@
     	        android:padding="10dp"
      	        android:gravity="center_vertical"/>
             <TextView
-                android:id="@+id/dialog_tooth_primary"
+                android:id="@+id/dialog_tooth_primary_hello"
                 android:layout_width="wrap_content"
     	        android:layout_height="fill_parent"
     	        android:padding="10dp"
@@ -170,7 +170,7 @@
     	        android:textColor="#cccccc"
      	        android:gravity="center_vertical"/>
             <TextView
-                android:id="@+id/dialog_tooth_primary"
+                android:id="@+id/dialog_tooth_primary_hehe"
                 android:layout_width="wrap_content"
     	        android:layout_height="fill_parent"
     	        android:padding="10dp"
@@ -344,7 +344,7 @@
     	        android:textColor="#cccccc"
      	        android:gravity="center_vertical"/>
             <TextView
-                android:id="@+id/dialog_tooth_liprotate"
+                android:id="@+id/dialog_tooth_liprotate_hh"
                 android:layout_width="wrap_content"
     	        android:layout_height="fill_parent"
     	        android:layout_marginLeft="10dp"

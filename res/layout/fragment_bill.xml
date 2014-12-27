@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_white">
+    
+    <RadioGroup
+        android:id="@+id/bill_tab"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+        <RadioButton
+            android:id="@+id/bill_tab_all"
+            style="@style/emr_tab"
+            android:drawableBottom="@drawable/emr_tab_bottom"
+            android:text="全部" />
+        <RadioButton
+            android:id="@+id/bill_tab_unread"
+            style="@style/emr_tab"
+            android:drawableBottom="@drawable/emr_tab_bottom"
+            android:text="未读" />
+        <RadioButton
+            android:id="@+id/bill_tab_mark"
+            style="@style/emr_tab"
+            android:drawableBottom="@drawable/emr_tab_bottom"
+            android:text="标记" />
+    </RadioGroup>
+    
+  	<FrameLayout 
+        android:id="@+id/bill_tabcontent"
+     	android:layout_width="match_parent"
+     	android:layout_height="wrap_content"
+     	android:layout_below="@+id/bill_tab"/>
+  	
+  	<LinearLayout 
+  	    android:layout_width="match_parent"
+  	    android:layout_height="wrap_content"
+  	    android:orientation="horizontal"
+  	    android:layout_alignParentBottom="true"
+  	    android:background="#fff">
+        
+		<Spinner 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_weight="2"
+	    android:id="@+id/spinner"
+	    android:entries="@array/spinner_time_range"/>
+		
+		<Button
+		    android:id="@+id/show_chart"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="查看折线图"
+		    android:layout_weight="3"/>
+	
+	</LinearLayout>
+	  
+</RelativeLayout>

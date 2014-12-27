@@ -19,10 +19,9 @@ import android.widget.TextView;
 
 public class OnedayAppointListFragment extends Fragment implements OnSlideListener{
 	
-	private ListViewCompat listView; //
+	private ListViewCompat listView; 
 	private SlideView mLastSlideViewWithStatusOn;
 	private ArrayList<AppointmentItem> data;
-	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,11 +47,9 @@ public class OnedayAppointListFragment extends Fragment implements OnSlideListen
 		item.appointment = appoint;
 		data.add(item);
 		this.listView.setAdapter(new SlideAdapter());
-		
 	}
 
     private class SlideAdapter extends BaseAdapter{
-
     	private LayoutInflater mInflater;
     	
     	SlideAdapter(){
@@ -101,7 +98,6 @@ public class OnedayAppointListFragment extends Fragment implements OnSlideListen
 			
 			
 			holder.delete.setOnClickListener(new OnClickListener(){
-
 				@Override
 				public void onClick(View v) {
 					//删除事件
@@ -109,7 +105,6 @@ public class OnedayAppointListFragment extends Fragment implements OnSlideListen
 					notifyDataSetChanged(); 
 				}});
 			holder.done.setOnClickListener(new OnClickListener(){
-
 				@Override
 				public void onClick(View v) {
 					//完成事件
@@ -117,7 +112,6 @@ public class OnedayAppointListFragment extends Fragment implements OnSlideListen
 				}});
 			return slideView;
 		}
-    	
     }
     public class AppointmentItem{
     	public AppointmentElement appointment;

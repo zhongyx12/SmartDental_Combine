@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/medicine_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+	
+	<TextView
+    	android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_weight="1"
+        android:id="@+id/medicine_name"
+        android:layout_margin="5dp"
+        android:textSize="12sp"/>
+	<TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center_horizontal"
+	    android:layout_weight="1"
+	    android:id="@+id/medicine_num"
+	    android:layout_margin="5dp"
+        android:textSize="12sp"/>
+	<TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center_horizontal"
+	    android:layout_weight="1"
+	    android:id="@+id/medicine_price"
+	    android:layout_margin="5dp"
+        android:textSize="12sp"/>
+	
+	<TextView
+    	android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_weight="1"
+        android:id="@+id/medicine_offical_cost"
+        android:layout_margin="5dp"
+        android:textSize="12sp"/>
+	
+	<TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center_horizontal"
+	    android:layout_weight="1"
+	    android:id="@+id/medicine_self_cost"
+	    android:layout_margin="5dp"
+        android:textSize="12sp"/>
+	
+	<TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center_horizontal"
+	    android:layout_weight="1"
+	    android:id="@+id/medicine_addition"
+	    android:layout_margin="5dp"
+        android:textSize="12sp"/>
+    
+</LinearLayout>

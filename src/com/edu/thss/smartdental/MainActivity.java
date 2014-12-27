@@ -1,14 +1,32 @@
-package com.edu.thss.smartdental;
+ package com.edu.thss.smartdental;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
+import com.edu.thss.smartdental.model.general.ParseJson;
+import com.edu.thss.smartdental.model.general.SDAccount;
 import com.edu.thss.smartdental.ui.drawer.NavDrawerItem;
 import com.edu.thss.smartdental.ui.drawer.NavDrawerListAdapter;
+import com.edu.thss.smartdental.util.Tools;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -16,12 +34,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends FragmentActivity implements OnItemClickListener {
@@ -41,6 +57,8 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		new SyncDaemon().execute("test");
+
 		findView();
 		
 		if(savedInstanceState == null){
@@ -67,7 +85,8 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[5],mNavMenuIconsTypeArray.getResourceId(5, -1)));
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[6],mNavMenuIconsTypeArray.getResourceId(6, -1)));
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[7],mNavMenuIconsTypeArray.getResourceId(7, -1)));
-	
+		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[8],mNavMenuIconsTypeArray.getResourceId(8, -1)));
+		
 		mNavMenuIconsTypeArray.recycle();
 		
 		mAdapter = new NavDrawerListAdapter(getApplicationContext(),mNavDrawerItems);
@@ -139,6 +158,9 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 			fragment = new DataFragment();
 			break;
 		case 7: 
+			fragment = new BillFragment();
+			break;
+		case 8: 
 			fragment = new SettingFragment();
 			break;
 		default: break;
@@ -161,6 +183,60 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
     public void setTitle(CharSequence title){
     	mTitle = title;
     	getActionBar().setTitle(mTitle);
+    }
+
+     class SyncDaemon extends AsyncTask {
+
+		@Override
+		protected Object doInBackground(Object... arg0) {
+			while (true) {
+				try {
+					// Log.i("travis", "Sleep");
+					Thread.sleep(10000);
+
+					HttpClient httpClient = new DefaultHttpClient();
+
+					String url = "http://smartdental.sinaapp.com/db_query.php";
+					HttpGet request = new HttpGet(url + "?lastTimestmap=sdf&pid=1");
+					HttpResponse response = httpClient.execute(request);
+					
+					String strResult = EntityUtils.toString(response.getEntity());   
+					strResult = new String(strResult.getBytes("ISO-8859-1"), "UTF8");
+					strResult = new String(strResult);
+					
+					SDAccount [] accounts = ParseJson.parseSimpleAccount(strResult.replaceFirst("<.*>", ""));
+					
+					NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+					
+					Notification notification = new Notification(R.drawable.ic_launcher,"���",System.currentTimeMillis());
+					Intent intent = new Intent(MainActivity.this,MainActivity.class);
+					PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,intent,0);                                                                          notification.setLatestEventInfo(getApplicationContext(), "Í¨Öª±êÌâ", "Í¨ÖªÏÔÊ¾µÄÄÚÈÝ", pendingIntent);
+					notification.flags = Notification.FLAG_AUTO_CANCEL;
+					notification.defaults = Notification.DEFAULT_SOUND;
+					manager.notify(0, notification);
+					
+					// Log.i("travis", "count: " + accounts[0].hospital);
+					
+					FileOutputStream fout = openFileOutput("accounts.tmp", Context.MODE_PRIVATE);;
+					ObjectOutputStream oos = new ObjectOutputStream(fout);
+					oos.writeObject(accounts);
+					oos.close();
+						
+				} catch (InterruptedException e) {
+					Log.i("travis", e.toString());
+					return null;
+				} catch (UnsupportedEncodingException e) {
+					Log.i("travis", e.toString());
+					return null;
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
     }
 
 }
