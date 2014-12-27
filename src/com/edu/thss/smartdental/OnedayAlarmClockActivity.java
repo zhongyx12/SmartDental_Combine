@@ -9,6 +9,7 @@ import com.edu.thss.smartdental.model.Model;
 import com.edu.thss.smartdental.ui.alarmclock.ListViewCompat;
 import com.edu.thss.smartdental.ui.alarmclock.SlideView;
 import com.edu.thss.smartdental.ui.alarmclock.SlideView.OnSlideListener;
+import com.edu.thss.smartdental.util.Tools;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -57,6 +58,11 @@ public class OnedayAlarmClockActivity extends Activity implements OnSlideListene
 			    intent.putExtra("id", (long)-1);
 			    intent.putExtra("date", listDate);
 			    startActivityForResult(intent, 0);
+//				Intent intent = new Intent(OnedayAlarmClockActivity.this, AlarmBill.class);
+//    		    intent.putExtra("rate", 0.8);
+//    		    intent.putExtra("threshold", 1000);
+//    		    intent.putExtra("current", (double)11500);
+//    		    startActivityForResult(intent, 0);
 			}});
 		initData();
 	}

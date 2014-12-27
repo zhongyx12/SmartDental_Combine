@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -17,6 +19,8 @@ import com.edu.thss.smartdental.model.general.SDAccount;
 import com.edu.thss.smartdental.ui.drawer.NavDrawerItem;
 import com.edu.thss.smartdental.ui.drawer.NavDrawerListAdapter;
 import com.edu.thss.smartdental.util.Tools;
+
+
 
 
 import android.os.AsyncTask;
@@ -51,6 +55,7 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 	private ArrayList<NavDrawerItem> mNavDrawerItems;
 	private NavDrawerListAdapter mAdapter;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private static int threshold = 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -221,15 +226,26 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 					String endTime = Tools.getStringFormDate(now);
 				    SDAccount [] monthAccounts = Tools.filterAccounts(accounts, startTime, endTime);
 				    SDAccount [] monthAccounts2 = Tools.filterAccounts(accounts, startTime, endTime);
-				    for(double i = 0.8; ; i+=0.1){
-				    	if(Tools.getTotalCost(monthAccounts2) < threshold * i)
-				    		break;
-				    	else if(Tools.getTotalCost(monthAccounts) < threshold*i && Tools.getTotalCost(monthAccounts2) >= threshold*i){
-				    		;
-				    		break;
-				    	}
-					}
-				    		
+				    boolean remindFlag = false;
+				    if (Tools.getTotalCost(monthAccounts2) >= threshold * 0.8)
+				    {
+				    	for(double i = 0.8; ; i+=0.1){
+					    	if(Tools.getTotalCost(monthAccounts) < threshold*i && Tools.getTotalCost(monthAccounts2) >= threshold*i)
+					    		remindFlag = true;
+					    	else if (Tools.getTotalCost(monthAccounts2) < threshold * i)
+					    	{
+					    		if (remindFlag)
+					    		{
+					    			Intent intent = new Intent(MainActivity.this, AlarmBill.class);
+					    		    intent.putExtra("rate", i-0.1);
+					    		    intent.putExtra("threshold", threshold);
+					    		    intent.putExtra("current", Tools.getTotalCost(monthAccounts2));
+					    		    startActivityForResult(intent, 0);
+					    		}
+					    		break;
+					    	}
+						}
+				    }	
 					
 					NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
                     //构建一个通知对象(需要传递的参数有三个,分别是图标,标题和 时间)
