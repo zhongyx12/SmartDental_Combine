@@ -9,8 +9,8 @@
    	    <item>课程</item>
    	    <item>数据分析</item>
    	    <item>我的账单</item>
-   	    <item>设置</item>
    	    <item>日程提醒</item>
+   	    <item>设置</item>
    	</string-array>
    	<string-array name="nav_drawer_icons">
    	    <item>@drawable/ic_drawer_info</item>
