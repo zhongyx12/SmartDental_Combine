@@ -40,6 +40,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
+
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
 public class MainActivity extends FragmentActivity implements OnItemClickListener {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -86,7 +99,6 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[6],mNavMenuIconsTypeArray.getResourceId(6, -1)));
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[7],mNavMenuIconsTypeArray.getResourceId(7, -1)));
 		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[8],mNavMenuIconsTypeArray.getResourceId(8, -1)));
-		mNavDrawerItems.add(new NavDrawerItem(mNavMenuTitles[9],mNavMenuIconsTypeArray.getResourceId(9, -1)));
 		
 		mNavMenuIconsTypeArray.recycle();
 		
@@ -162,9 +174,6 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 			fragment = new BillFragment();
 			break;
 		case 8: 
-			fragment = new ClockFragment();
-			break;
-		case 9:
 			fragment = new SettingFragment();
 			break;
 		default: break;
@@ -193,6 +202,7 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 
 		@Override
 		protected Object doInBackground(Object... arg0) {
+			
 			while (true) {
 				try {
 					// Log.i("travis", "Sleep");
@@ -210,15 +220,23 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 					
 					SDAccount [] accounts = ParseJson.parseSimpleAccount(strResult.replaceFirst("<.*>", ""));
 					
+					SDAccount [] accounts2 = Tools.getAccountInfoFromLocal(getApplicationContext());
+					if (accounts.length == accounts2.length) {
+						continue;
+					}
+					
+					
+				    
 					NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-					
-					Notification notification = new Notification(R.drawable.ic_launcher,"���",System.currentTimeMillis());
-					Intent intent = new Intent(MainActivity.this,MainActivity.class);
-					PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,intent,0);                                                                          notification.setLatestEventInfo(getApplicationContext(), "Í¨Öª±êÌâ", "Í¨ÖªÏÔÊ¾µÄÄÚÈÝ", pendingIntent);
-					notification.flags = Notification.FLAG_AUTO_CANCEL;
-					notification.defaults = Notification.DEFAULT_SOUND;
-					manager.notify(0, notification);
-					
+                    //构建一个通知对象(需要传递的参数有三个,分别是图标,标题和 时间)
+                    Notification notification = new Notification(R.drawable.ic_launcher,"您有"+(accounts.length-accounts2.length)+"条新的账单",System.currentTimeMillis());
+                    Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,intent,0); 
+                    notification.setLatestEventInfo(getApplicationContext(), "账单提醒", "您有"+(accounts.length-accounts2.length)+"条新的账单", pendingIntent);
+                    notification.flags = Notification.FLAG_AUTO_CANCEL;//点击后自动消失
+                    notification.defaults = Notification.DEFAULT_SOUND;//声音默认
+                    manager.notify(0, notification);//发动通知,id由自己指定，每一个Notification对应的唯一标志
+                     
 					// Log.i("travis", "count: " + accounts[0].hospital);
 					
 					FileOutputStream fout = openFileOutput("accounts.tmp", Context.MODE_PRIVATE);;
