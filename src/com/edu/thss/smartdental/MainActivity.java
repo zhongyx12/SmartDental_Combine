@@ -221,11 +221,14 @@ public class MainActivity extends FragmentActivity implements OnItemClickListene
 					String endTime = Tools.getStringFormDate(now);
 				    SDAccount [] monthAccounts = Tools.filterAccounts(accounts, startTime, endTime);
 				    SDAccount [] monthAccounts2 = Tools.filterAccounts(accounts, startTime, endTime);
-				    for(double i = 1; i > 0; i-=0.1)
-				    	if(Tools.getTotalCost(monthAccounts) < threshold*i && Tools.getTotalCost(monthAccounts2) >= threshold*i){
+				    for(double i = 0.8; ; i+=0.1){
+				    	if(Tools.getTotalCost(monthAccounts2) < threshold * i)
+				    		break;
+				    	else if(Tools.getTotalCost(monthAccounts) < threshold*i && Tools.getTotalCost(monthAccounts2) >= threshold*i){
 				    		;
 				    		break;
 				    	}
+					}
 				    		
 					
 					NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
