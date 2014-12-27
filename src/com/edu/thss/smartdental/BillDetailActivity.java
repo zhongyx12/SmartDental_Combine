@@ -70,7 +70,7 @@ public class BillDetailActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_bg));
 		
-		setTitle("�˵�����");
+		setTitle("账单详情");
 	}
 	
 	private void initData() {
@@ -96,7 +96,7 @@ public class BillDetailActivity extends Activity {
 				}
 			}
 		}
-		totalCost.setText(Double.toString(total));
+		totalCost.setText(Double.toString(total)+"元");
 		adapter = new MedicineAdapter();
         mListView.setAdapter(adapter); 
 	}
