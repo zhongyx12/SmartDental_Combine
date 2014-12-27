@@ -21,5 +21,8 @@
     <string name="title_activity_oneday_alarm_clock">日程列表</string>
     <string name="title_activity_set_clock">日程详情</string>
     <string name="title_activity_daily_remind">消息提醒</string>
+    <string name="title_activity_bill_fragment">BillFragment</string>
+    <string name="title_activity_bill_detail">BillDetailActivity</string>
+    <string name="title_activity_line_chart">我的账单</string>
 
 </resources>

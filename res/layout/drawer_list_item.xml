@@ -24,6 +24,7 @@
 	    android:textSize="18sp"
 	    android:layout_centerVertical="true"
 	    android:paddingRight="40dp"
+	    android:paddingLeft="40dp"
 	    />
 	<TextView 
 	    android:id="@+id/drawerCounter"

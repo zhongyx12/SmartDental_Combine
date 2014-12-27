@@ -8,8 +8,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    
     <!-- android:icon="@drawable/ic_launcher" -->
     <application
         android:allowBackup="true"
@@ -82,6 +84,14 @@
             android:name=".DailyRemind"
             android:label="@string/title_activity_daily_remind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+		</activity>
+		<activity
+            android:name=".BillDetailActivity"
+            android:label="@string/title_activity_bill_detail" >
+        </activity>
+        <activity
+            android:name=".LineChartActivity"
+            android:label="@string/title_activity_line_chart" >
         </activity>
     </application>
 

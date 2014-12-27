@@ -3,5 +3,8 @@
     <issue id="DefaultLocale" severity="ignore" />
     <issue id="NewApi">
         <ignore path="src/com/edu/thss/smartdental/DailyNotificationBusiness.java" />
+	</issue>
+    <issue id="SimpleDateFormat">
+        <ignore path="src/com/edu/thss/smartdental/LineChartView.java" />
     </issue>
 </lint>

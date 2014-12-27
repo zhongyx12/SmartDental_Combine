@@ -13,7 +13,6 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 public class ToothFragment extends Fragment  {
-	
 	private FragmentManager fm = null; 
 	private RadioGroup radioGroup;
 	public ToothFragment(){
