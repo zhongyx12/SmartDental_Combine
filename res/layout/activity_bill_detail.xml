@@ -105,8 +105,7 @@
 		    android:layout_marginLeft="5dp"
 		    android:layout_marginBottom="5dp"
 		    android:layout_marginTop="5dp"
-	       	android:textColor="@color/app_blue"
-		    android:text="￥200" />
+	       	android:textColor="@color/app_blue"/>
 			
 	</LinearLayout>
 	</RelativeLayout>

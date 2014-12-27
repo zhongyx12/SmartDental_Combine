@@ -47,13 +47,13 @@ public class BillDetailActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){  
-		    Log.i("info", "landscape"); // ∫·∆¡ 
+		    Log.i("info", "landscape"); // ÔøΩÔøΩÔøΩÔøΩ 
 		    isLandscape = true;
 		    super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_bill_detail_land);
 		}  
 		else if (this.getResources().getConfiguration().orientation ==Configuration.ORIENTATION_PORTRAIT) {  
-		    Log.i("info", "portrait"); //  ˙∆¡ 
+		    Log.i("info", "portrait"); // ÔøΩÔøΩÔøΩÔøΩ 
 		    isLandscape = false;
 		    super.onCreate(savedInstanceState);
 			setContentView(R.layout.activity_bill_detail);
@@ -65,12 +65,12 @@ public class BillDetailActivity extends Activity {
 		
 		initData();
 		
-		//…Ë÷√ActionBar
+		//ÔøΩÔøΩÔøΩÔøΩActionBar
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_bg));
 		
-		setTitle("’Àµ•œÍ«È");
+		setTitle("Ë¥¶ÂçïËØ¶ÊÉÖ");
 	}
 	
 	private void initData() {
@@ -96,7 +96,7 @@ public class BillDetailActivity extends Activity {
 				}
 			}
 		}
-		totalCost.setText(Double.toString(total));
+		totalCost.setText(Double.toString(total)+"ÂÖÉ");
 		adapter = new MedicineAdapter();
         mListView.setAdapter(adapter); 
 	}
@@ -128,7 +128,7 @@ public class BillDetailActivity extends Activity {
 			MedicineViewHolder holder;
 			View itemView = (View) convertView;
 			if (itemView == null) {
-				//¥¶¿Ì∫·∆¡
+				//ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
 				if(isLandscape) {
 					itemView = mInflater.inflate(R.layout.bill_detail_item_land, null);
 				}
@@ -146,7 +146,7 @@ public class BillDetailActivity extends Activity {
 			holder.name.setText(item.name);
 			holder.num.setText(item.num);
 			holder.cost.setText(item.cost);
-			//¥¶¿Ì∫·∆¡
+			//ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
 			if (isLandscape) {
 				holder.officialCost.setText(item.officialCost);
 				holder.selfCost.setText(item.selfCost);
@@ -169,7 +169,7 @@ public class BillDetailActivity extends Activity {
     		name = (TextView) view.findViewById(R.id.medicine_name);
     		num = (TextView) view.findViewById(R.id.medicine_num);
     		cost = (TextView) view.findViewById(R.id.medicine_price);
-    		//¥¶¿Ì∫·∆¡
+    		//ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
     		if (isLandscape) {
     			officialCost = (TextView) view.findViewById(R.id.medicine_offical_cost);
     			selfCost = (TextView) view.findViewById(R.id.medicine_self_cost);
